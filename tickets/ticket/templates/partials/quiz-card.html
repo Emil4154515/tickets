@@ -1,0 +1,48 @@
+{% if quiz.is_end %}
+<div class="col-xl-3 col-lg-6 col-12">
+  <a href="{% url 'quiz' quiz.id %}">
+    <div class="card">
+      <div class="card-content">
+        <div class="card-body">
+          <div class="media">
+            <div class="media-body text-left">
+              <h4># {{ quiz.id }}</h4>
+              <h3 class="mb-1 {{ quiz.get_result_color }}">+{{ quiz.correct_answers }}|-{{ quiz.incorrect_answers }}
+                <i class="{% if quiz.result_by_last_quizzes == 'BETTER' %} ft-arrow-up success {% elif quiz.result_by_last_quizzes == 'WORSE' %} ft-arrow-down danger {% else %} ft-minus secondary {% endif %} font-medium-3" data-toggle="popover" data-content="{{ quiz.result_text }}" data-trigger="hover" data-original-title="Result relative to the latest quizzes"></i>
+              </h3>
+              <span style="color: #342E49">{{ quiz.end_date }}</span>
+            </div>
+            <div class="media-right align-self-center">
+              <span class="{{ quiz.get_result_color }} font-large-2 float-right">{{ quiz.get_score }}</span>
+            </div>
+          </div>
+          <div class="progress" style="height: 4px;">
+              <div class="progress-bar bg-{{ quiz.get_result_color }}" role="progressbar" aria-valuenow="{{ quiz.get_correct_percent }}" aria-valuemin="{{ quiz.get_correct_percent }}" aria-valuemax="100" style="width:{{ quiz.get_correct_percent }}%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </a>
+</div>
+{% else %}
+<div class="col-xl-3 col-lg-6 col-12">
+  <a href="{% url 'quiz' quiz.id %}">
+    <div class="card card-inverse bg-primary">
+      <div class="card-content">
+        <div class="card-body">
+          <div class="media">
+            <div class="media-body text-left">
+              <h4 class="color: white"># {{ quiz.id }}</h4>
+              <h3 class="card-text">+{{ quiz.correct_answers }}|-{{ quiz.incorrect_answers }}</h3>
+              <span>{{ quiz.questions_left }} questions left</span>
+            </div>
+            <div class="media-right align-self-center">
+              <i class="ft-play font-large-2 float-right"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </a>
+</div>
+{% endif %}

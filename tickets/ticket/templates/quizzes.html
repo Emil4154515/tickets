@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load ticket %}
+
+
+{% block content %}
+
+<section id="minimal-statistics">
+  <div class="row">
+    <div class="col-12">
+      <div class="my-3">
+        <button class="btn btn-primary mr-2" data-toggle="modal" data-target="#quiz_modal">
+          <span class="d-flex align-items-center">
+            <i class="ft-plus mr-1"></i>
+            <span>New Quiz</span>
+          </span>
+        </button>
+<!--        <button class="btn bg-light-primary">-->
+<!--          <span class="d-flex align-items-center">-->
+<!--            <i class="ft-filter mr-1"></i>-->
+<!--            <span>Filter</span>-->
+<!--          </span>-->
+<!--        </button>-->
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="content-header">Latest quizzes</div>
+      <p class="content-sub-header mb-1">All the quizzes you have taken</p>
+    </div>
+  </div>
+  <div class="row">
+    {% for quiz in quizzes %}
+        {% include 'partials/quiz-card.html' %}
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

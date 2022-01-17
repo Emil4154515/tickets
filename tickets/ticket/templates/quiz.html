@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% with answer=quiz.get_current_ticket %}
+<section class="users-view">
+    <div class="row">
+        <div class="col-md-4 col-12">
+            <div class="card text-center" id="ticket_block">
+                <div class="ticket-question">
+                  <span class="font-medium-2 info" style="margin-top: 20px;">{{ answer.question_queue }}/{{ quiz.total_questions }}</span>
+                  <div class="card-header text-center pb-0 height-250">
+                    <h3 class="font-large-2 mt-2">{{ answer.ticket.question }}</h3>
+                  </div>
+                  <div class="card-content">
+                    <div class="col-12 ticket-card-action-bar">
+                        <button type="button" class="btn btn-success bg-light-success mr-1 mb-1">+{{ quiz.correct_answers }}</button>
+                        <button type="button" class="btn btn-secondary bg-light-secondary mr-1 mb-1" id="show_answer">Show answer</button>
+                        <button type="button" class="btn btn-danger bg-light-danger mr-1 mb-1">-{{ quiz.incorrect_answers }}</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="ticket-answer">
+                  <span class="font-medium-2 info" style="margin-top: 20px;">{{ answer.question_queue }}/{{ quiz.total_questions }}</span>
+                  <div class="card-header text-center pb-0 height-250">
+                    <h3 class="font-large-2 mt-2" style="color:#975AFF">{{ answer.ticket.answer }}</h3>
+                  </div>
+                  <div class="card-content">
+                    <div class="col-12 ticket-card-action-bar">
+                        <form action="{% url 'quiz_answer' quiz.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success bg-light-success mr-1 mb-1">Correctly</button>
+                            <input type="hidden" name="answer" value="correct">
+                        </form>
+                        <form action="{% url 'quiz_answer' quiz.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger bg-light-danger mr-1 mb-1">Incorrectly</button>
+                            <input type="hidden" name="answer" value="incorrect">
+                        </form>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endwith %}
+
+{% endblock %}
